@@ -20,6 +20,8 @@ This is a Godot 4.5 first-person game using a **component-based architecture**.
   - `FlickerLightComponent.gd` - Makes Light3D nodes flicker for atmospheric effects
   - `CameraSnapshotComponent.gd` - Captures scene from camera viewpoint to texture
   - `TVScreenComponent.gd` - Displays captured images on TV screen with static effect
+  - `MultiMeshCollisionComponent.gd` - Generates collision bodies for MultiMesh instances
+  - `MultiMeshCombinerComponent.gd` - Combines multiple objects into optimized MultiMesh
 
 - **Scenes** (`scenes/`):
   - `player.tscn` - Player with all movement and pickup components attached
@@ -36,6 +38,7 @@ This is a Godot 4.5 first-person game using a **component-based architecture**.
   - `PICKUP_SYSTEM.md` - Complete pickup system documentation
   - `SPAWNER_SYSTEM.md` - Complete spawner system guide with examples
   - `TV_CAMERA_SYSTEM.md` - TV screen display and camera snapshot system
+  - `MULTIMESH_SYSTEM.md` - MultiMesh optimization system for rendering many objects
 
 ## Component Architecture
 
@@ -122,6 +125,7 @@ This creates a horror game atmosphere where players must carry the TV to see in 
 ✅ Flickering light effect on TV
 ✅ TV screen displays captured camera images with static effect
 ✅ Camera snapshot system for surveillance/found-footage aesthetic
+✅ MultiMesh system for high-performance rendering of many objects
 
 ## TV Camera System
 
@@ -132,8 +136,18 @@ The game features a surveillance/found-footage system:
 - **Component-Based**: CameraSnapshotComponent captures → TVScreenComponent displays
 - See `TV_CAMERA_SYSTEM.md` for complete setup and customization guide
 
+## MultiMesh System
+
+The game includes a high-performance MultiMesh system for rendering many objects:
+- **MultiMeshCollisionComponent**: Generates collision bodies for MultiMesh instances
+- **MultiMeshCombinerComponent**: Combines multiple objects into optimized MultiMesh batches
+- **Performance**: Render thousands of objects (rocks, debris, props) with minimal draw calls
+- **Use Cases**: Candle fields, scattered debris, foliage, environmental props, gravestones
+- See `MULTIMESH_SYSTEM.md` for complete setup, examples, and best practices
+
 ## Need Help?
 
 - Read `COMPONENT_SYSTEM.md` - detailed examples, best practices, and troubleshooting for components
 - Read `PICKUP_SYSTEM.md` - complete guide to the pickup system with customization options
 - Read `TV_CAMERA_SYSTEM.md` - guide to camera capture and TV screen display system
+- Read `MULTIMESH_SYSTEM.md` - guide to optimizing many objects with MultiMesh
