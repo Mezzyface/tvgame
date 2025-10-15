@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyjb6ko00x8kj"]
+
+[ext_resource type="Script" uid="uid://ejqudm4usf3s" path="res://components/PickupableComponent.gd" id="1_p6dux"]
+[ext_resource type="Script" uid="uid://2bs2l7cwk3ys" path="res://components/TVScreenComponent.gd" id="1_tvscreen"]
+[ext_resource type="Script" uid="uid://byv6376n3rdvn" path="res://components/FlickerLightComponent.gd" id="1_usnid"]
+[ext_resource type="PackedScene" uid="uid://b3u7mxi2ip180" path="res://scenes/tv.tscn" id="2_jh23q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqtrc"]
+size = Vector3(1.2, 0.8, 0.8)
+
+[node name="PickupTV" type="RigidBody3D"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.158501, 0.44256517, -0.33694312)
+light_color = Color(0.8352941, 1, 1, 1)
+light_energy = 2.0
+light_volumetric_fog_energy = 2.197
+spot_range = 11.684
+spot_angle = 30.0
+
+[node name="FlickerLightComponent" type="Node" parent="SpotLight3D"]
+script = ExtResource("1_usnid")
+base_energy = 2.0
+
+[node name="PickupableComponent" type="Node" parent="."]
+script = ExtResource("1_p6dux")
+hold_distance = 1.0
+hold_offset_vertical = -1.5
+hold_smoothing = 100.0
+flip_away_from_player = true
+
+[node name="TVScreenComponent" type="Node" parent="."]
+script = ExtResource("1_tvscreen")
+screen_surface_index = 1
+enable_static = true
+static_intensity = 0.15
+static_speed = 10.0
+static_scale = 300.0
+auto_connect_camera = true
+
+[node name="tv" parent="." instance=ExtResource("2_jh23q")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.013424724, 0, -0.039453954)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BoxShape3D_qqtrc")

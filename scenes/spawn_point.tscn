@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8yv7n2x3p4q5"]
+
+[ext_resource type="Script" uid="uid://b3om3rxuafy4h" path="res://components/SpawnerComponent.gd" id="1_spawn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_spawn"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="SpawnPoint" type="Node3D"]
+
+[node name="SpawnerComponent" type="Node" parent="."]
+script = ExtResource("1_spawn")
+scene_to_spawn = "uid://cjdsfd03v6dpd"
+spawn_on_ready = true
+hide_after_spawn = true
+node_to_hide = NodePath("../VisualMarker")
+
+[node name="VisualMarker" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_spawn")
+skeleton = NodePath("../..")

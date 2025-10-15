@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://buhl8cwq46jtv"]
+
+[ext_resource type="Script" uid="uid://6v7ku26hxgoc" path="res://components/PickupableComponent.gd" id="1_pickup"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_box01"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_box01"]
+
+[node name="PickupableBox" type="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_box01")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_box01")
+
+[node name="PickupableComponent" type="Node" parent="."]
+script = ExtResource("1_pickup")
+hold_distance = 1.0
+hold_offset_vertical = -1.0

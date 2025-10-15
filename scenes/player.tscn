@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjdsfd03v6dpd"]
+
+[ext_resource type="Script" uid="uid://b3upw0ayd0lyl" path="res://components/MovementInputComponent.gd" id="1_2xk3v"]
+[ext_resource type="Script" uid="uid://c75c6usvukbav" path="res://components/Walk3DComponent.gd" id="2_g4h8j"]
+[ext_resource type="Script" uid="uid://ctqt674vfdad6" path="res://components/Jump3DComponent.gd" id="3_m5n9k"]
+[ext_resource type="Script" uid="uid://bq1sepb4ifhrc" path="res://components/MouseLookComponent.gd" id="4_mouse"]
+[ext_resource type="Script" uid="uid://c0nfwge1oc6oi" path="res://components/CameraControllerComponent.gd" id="5_camera"]
+[ext_resource type="Script" uid="uid://rx7qjhxpfpc3" path="res://components/PickupControllerComponent.gd" id="6_pickup"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i3pqv"]
+
+[node name="Player" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="MovementInputComponent" type="Node" parent="."]
+script = ExtResource("1_2xk3v")
+
+[node name="Walk3DComponent" type="Node" parent="."]
+script = ExtResource("2_g4h8j")
+
+[node name="Jump3DComponent" type="Node" parent="."]
+script = ExtResource("3_m5n9k")
+
+[node name="MouseLookComponent" type="Node" parent="."]
+script = ExtResource("4_mouse")
+
+[node name="CameraControllerComponent" type="Node" parent="."]
+script = ExtResource("5_camera")
+camera_path = NodePath("../Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_i3pqv")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="PickupControllerComponent" type="Node" parent="."]
+script = ExtResource("6_pickup")
+pickup_range = 8.0
+
+[connection signal="jump_requested" from="MovementInputComponent" to="Jump3DComponent" method="perform_jump"]
+[connection signal="movement_input" from="MovementInputComponent" to="Walk3DComponent" method="apply_movement"]
+[connection signal="look_input" from="MouseLookComponent" to="CameraControllerComponent" method="apply_rotation_delta"]

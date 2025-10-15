@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.godotengine.org)",
+      "WebSearch",
+      "WebFetch(domain:www.gdquest.com)",
+      "WebFetch(domain:kidscancode.org)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://c77gb1l40uk42"]
+
+[ext_resource type="Script" uid="uid://bx7pfr4rvu52g" path="res://components/CameraSnapshotComponent.gd" id="1_snapshot"]
+[ext_resource type="Script" uid="uid://ce85kpoakkjyv" path="res://components/CameraIndicatorHelper.gd" id="2_indicator"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_camera_body"]
+size = Vector3(0.3, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_camera"]
+albedo_color = Color(0, 0.8, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.8, 1, 1)
+emission_energy_multiplier = 0.5
+
+[node name="CameraSnapshot" type="Node3D"]
+
+[node name="CameraSnapshotComponent" type="Node" parent="."]
+script = ExtResource("1_snapshot")
+capture_delay = 0.2
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+light_color = Color(1, 1, 1, 1)
+light_energy = 1.5
+light_indirect_energy = 1.0
+spot_range = 20.0
+spot_angle = 60.0
+
+[node name="VisualIndicator" type="Node3D" parent="."]
+script = ExtResource("2_indicator")
+
+[node name="CameraBody" type="MeshInstance3D" parent="VisualIndicator"]
+mesh = SubResource("BoxMesh_camera_body")
+surface_material_override/0 = SubResource("StandardMaterial3D_camera")
+
+[node name="DirectionArrow" type="CSGBox3D" parent="VisualIndicator"]
+size = Vector3(0.1, 0.1, 2)
+material = SubResource("StandardMaterial3D_camera")
+
+[node name="ArrowHead" type="CSGCylinder3D" parent="VisualIndicator/DirectionArrow"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1.2)
+radius = 0.2
+height = 0.4
+material = SubResource("StandardMaterial3D_camera")

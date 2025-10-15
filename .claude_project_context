@@ -1,0 +1,139 @@
+# Halloween Game - Godot 4.5 Project
+
+## Quick Start for Agents
+
+This is a Godot 4.5 first-person game using a **component-based architecture**.
+
+**IMPORTANT**: Read `COMPONENT_SYSTEM.md` for complete documentation on the component system before making changes.
+
+## Project Structure
+
+- **Components** (`components/`): Reusable Node scripts that provide specific capabilities
+  - `MovementInputComponent.gd` - Handles WASD + Space input
+  - `Walk3DComponent.gd` - Handles horizontal movement
+  - `Jump3DComponent.gd` - Handles jumping and gravity
+  - `MouseLookComponent.gd` - Handles mouse input with enable/disable
+  - `CameraControllerComponent.gd` - Generic camera rotation from any source
+  - `PickupControllerComponent.gd` - Handles picking up and dropping objects
+  - `PickupableComponent.gd` - Makes objects pickupable
+  - `SpawnerComponent.gd` - Spawns scenes at runtime (players, objects, checkpoints)
+  - `FlickerLightComponent.gd` - Makes Light3D nodes flicker for atmospheric effects
+  - `CameraSnapshotComponent.gd` - Captures scene from camera viewpoint to texture
+  - `TVScreenComponent.gd` - Displays captured images on TV screen with static effect
+
+- **Scenes** (`scenes/`):
+  - `player.tscn` - Player with all movement and pickup components attached
+  - `test_level.tscn` - Test level with black skybox and dramatic TV-only lighting
+  - `pickupable_box.tscn` - Example pickupable object (RigidBody3D with PickupableComponent)
+  - `pickup_tv.tscn` - Pickupable TV with SpotLight3D (cyan glow) and screen display with static
+  - `tv.tscn` - TV model mesh (referenced by pickup_tv.tscn)
+  - `spawn_point.tscn` - Example spawn point (Node3D with SpawnerComponent)
+  - `checkpoint.tscn` - Checkpoint with SpawnerComponent and trigger area
+  - `camera_snapshot.tscn` - Camera viewpoint for capturing scene images
+
+- **Documentation**:
+  - `COMPONENT_SYSTEM.md` - **READ THIS FIRST** - Complete component system guide
+  - `PICKUP_SYSTEM.md` - Complete pickup system documentation
+  - `SPAWNER_SYSTEM.md` - Complete spawner system guide with examples
+  - `TV_CAMERA_SYSTEM.md` - TV screen display and camera snapshot system
+
+## Component Architecture
+
+Components are Node scripts attached to CharacterBody3D that:
+- Extend Node (not CharacterBody3D)
+- Use signals for communication
+- Work with both player input and AI
+- Follow single responsibility principle
+
+Example:
+- MovementInputComponent → signals → Walk3DComponent + Jump3DComponent
+- MouseLookComponent → signals → CameraControllerComponent
+- PickupControllerComponent detects objects → PickupableComponent handles physics
+- CameraSnapshotComponent → signals → TVScreenComponent displays captured image
+
+## Input Actions (configured in project.godot)
+
+- W/A/S/D = move_forward/left/back/right
+- Space = jump
+- E = pickup (pick up and drop objects)
+
+## Common Tasks
+
+### Adding a new component:
+1. Create `MyComponent.gd` with `class_name MyComponent extends Node`
+2. Add exports for configuration
+3. Emit signals for events
+4. Add public methods for actions
+5. Attach to CharacterBody3D in scene
+6. Wire up signals in .tscn or parent script
+
+### Making an object pickupable:
+1. Create a RigidBody3D scene (or use existing)
+2. Add CollisionShape3D and MeshInstance3D
+3. Add PickupableComponent as child
+4. Configure exports if needed:
+   - hold_distance and hold_smoothing for positioning
+   - flip_away_from_player to rotate object 180° (useful for TVs, signs, mirrors)
+5. Player can now pick it up with E key
+
+### Suggested next features:
+- ThrowComponent to throw held objects with velocity
+- InteractionComponent for other object interactions
+- SprintComponent to modify walk speed
+- HealthComponent for damage system
+
+## Important Notes
+
+- CharacterBody3D must be root node (or parent) for physics to work
+- All visual elements must be children of CharacterBody3D to move with it
+- Components should NOT know about siblings - use signals
+- Always check parent type in `_ready()` with error handling
+
+## Godot 4.5 Documentation
+
+Use WebFetch or spawn an agent to research from: https://docs.godotengine.org/en/stable/
+
+## Lighting System
+
+The game features dramatic atmospheric lighting:
+- **Black Skybox**: WorldEnvironment with pure black background and no ambient light
+- **TV as Only Light Source**: A pickupable TV with a cyan SpotLight3D provides the sole illumination
+- **Flickering Effect**: The TV light uses FlickerLightComponent for realistic screen glow variation
+- **Settings**:
+  - Light energy: 2.0
+  - Spot range: 11.684
+  - Spot angle: 30.0°
+  - Light color: Cyan (0.835, 1, 1)
+  - Base flicker controlled by FlickerLightComponent exports
+
+This creates a horror game atmosphere where players must carry the TV to see in the darkness.
+
+## Current State
+
+✅ Player movement (WASD)
+✅ Jumping (Space)
+✅ Mouse look with enable/disable capability
+✅ First-person camera
+✅ Component system architecture
+✅ Pickup system (E key to pick up/drop objects)
+✅ Objects rotate with camera view when held
+✅ Test level with floor and pickupable TV
+✅ Dramatic TV-only lighting with black skybox
+✅ Flickering light effect on TV
+✅ TV screen displays captured camera images with static effect
+✅ Camera snapshot system for surveillance/found-footage aesthetic
+
+## TV Camera System
+
+The game features a surveillance/found-footage system:
+- **Camera Snapshot**: Place `camera_snapshot.tscn` at the end of the level to capture the scene
+- **TV Display**: The TV screen automatically displays the captured image with animated static
+- **Atmospheric Effect**: Creates a creepy surveillance camera or VHS tape aesthetic
+- **Component-Based**: CameraSnapshotComponent captures → TVScreenComponent displays
+- See `TV_CAMERA_SYSTEM.md` for complete setup and customization guide
+
+## Need Help?
+
+- Read `COMPONENT_SYSTEM.md` - detailed examples, best practices, and troubleshooting for components
+- Read `PICKUP_SYSTEM.md` - complete guide to the pickup system with customization options
+- Read `TV_CAMERA_SYSTEM.md` - guide to camera capture and TV screen display system

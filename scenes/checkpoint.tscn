@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cay08m3n5x6q7"]
+
+[ext_resource type="Script" path="res://components/SpawnerComponent.gd" id="1_checkpoint"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_checkpoint"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_checkpoint"]
+albedo_color = Color(0.2, 0.8, 0.3, 1)
+emission_enabled = true
+emission = Color(0.2, 0.8, 0.3, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape_checkpoint"]
+height = 2.0
+radius = 1.2
+
+[node name="Checkpoint" type="Node3D"]
+
+[node name="SpawnerComponent" type="Node" parent="."]
+script = ExtResource("1_checkpoint")
+spawn_on_ready = false
+spawn_as_child = false
+use_spawner_transform = true
+spawn_offset = Vector3(0, 1, 0)
+
+[node name="VisualMarker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_checkpoint")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_checkpoint")
+
+[node name="TriggerArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerArea"]
+shape = SubResource("CylinderShape_checkpoint")
