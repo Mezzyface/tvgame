@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjdsfd03v6dpd"]
+[gd_scene load_steps=10 format=3 uid="uid://cjdsfd03v6dpd"]
 
 [ext_resource type="Script" uid="uid://b3upw0ayd0lyl" path="res://components/MovementInputComponent.gd" id="1_2xk3v"]
 [ext_resource type="Script" uid="uid://c75c6usvukbav" path="res://components/Walk3DComponent.gd" id="2_g4h8j"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bq1sepb4ifhrc" path="res://components/MouseLookComponent.gd" id="4_mouse"]
 [ext_resource type="Script" uid="uid://c0nfwge1oc6oi" path="res://components/CameraControllerComponent.gd" id="5_camera"]
 [ext_resource type="Script" uid="uid://rx7qjhxpfpc3" path="res://components/PickupControllerComponent.gd" id="6_pickup"]
+[ext_resource type="Script" uid="uid://ctipkqt3r6cot" path="res://components/Crouch3DComponent.gd" id="7_crouch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 
@@ -25,6 +26,9 @@ script = ExtResource("2_g4h8j")
 
 [node name="Jump3DComponent" type="Node" parent="."]
 script = ExtResource("3_m5n9k")
+
+[node name="Crouch3DComponent" type="Node" parent="."]
+script = ExtResource("7_crouch")
 
 [node name="MouseLookComponent" type="Node" parent="."]
 script = ExtResource("4_mouse")
@@ -46,4 +50,5 @@ pickup_range = 8.0
 
 [connection signal="jump_requested" from="MovementInputComponent" to="Jump3DComponent" method="perform_jump"]
 [connection signal="movement_input" from="MovementInputComponent" to="Walk3DComponent" method="apply_movement"]
+[connection signal="crouch_changed" from="MovementInputComponent" to="Crouch3DComponent" method="set_crouching"]
 [connection signal="look_input" from="MouseLookComponent" to="CameraControllerComponent" method="apply_rotation_delta"]

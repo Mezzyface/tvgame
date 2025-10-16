@@ -133,13 +133,13 @@ func _setup_material() -> void:
 	_shader_material = ShaderMaterial.new()
 	_shader_material.shader = shader
 
-	# Set shader parameters (using the original shader's parameter names)
-	_shader_material.set_shader_parameter("static_speed", static_speed * 0.5)  # Original uses 0-10 range
-	_shader_material.set_shader_parameter("static_density", static_intensity)  # Map intensity to density
+	# Set shader parameters
+	_shader_material.set_shader_parameter("static_intensity", static_intensity)
 	_shader_material.set_shader_parameter("emission_color", Vector3(0.7, 0.8, 1.0))  # Cyan glow
 	_shader_material.set_shader_parameter("emission_strength", 2.0)
 	_shader_material.set_shader_parameter("scan_line_speed", 1.0)
-	_shader_material.set_shader_parameter("scan_line_intensity", 0.3)
+	_shader_material.set_shader_parameter("scan_line_intensity", 0.15)
+	_shader_material.set_shader_parameter("hint_visibility", 0.0)  # No hints by default
 
 	_apply_material_to_mesh(_shader_material)
 
@@ -216,3 +216,15 @@ func set_static_intensity(intensity: float) -> void:
 	static_intensity = intensity
 	if _shader_material:
 		_shader_material.set_shader_parameter("static_intensity", intensity)
+
+
+## Set a hint texture to overlay on the TV screen
+func set_hint_texture(texture: Texture2D) -> void:
+	if _shader_material:
+		_shader_material.set_shader_parameter("hint_texture", texture)
+
+
+## Set hint visibility (0.0 = hidden, 1.0 = fully visible)
+func set_hint_visibility(visibility: float) -> void:
+	if _shader_material:
+		_shader_material.set_shader_parameter("hint_visibility", clamp(visibility, 0.0, 1.0))

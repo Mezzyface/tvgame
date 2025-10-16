@@ -19,6 +19,7 @@ signal spawn_failed(reason: String)  ## Emitted when spawn fails
 @export var one_shot: bool = false  ## If true, can only spawn once, then disables itself
 @export var hide_after_spawn: bool = false  ## If true, hide the spawner's visual children after spawning
 @export var node_to_hide: NodePath = NodePath()  ## Specific node to hide after spawning (overrides hide_after_spawn)
+@export var editor_only_visual: bool = true  ## If true, hide visual marker in game (only visible in editor)
 
 # State
 var has_spawned: bool = false
@@ -30,6 +31,14 @@ func _ready() -> void:
 	spawner_node = get_parent() as Node3D
 	if not spawner_node:
 		push_warning("SpawnerComponent parent is not a Node3D. Position/rotation will not work correctly.")
+
+	# Check if this is a spawn point and we're loading from a checkpoint
+	if spawner_node and spawner_node.is_in_group("spawn_point"):
+		_check_for_saved_spawn_position()
+
+	# Hide visual markers in game if editor_only_visual is enabled
+	if editor_only_visual and spawner_node:
+		_hide_visual_children(spawner_node)
 
 	# Validate scene path
 	if scene_to_spawn.is_empty():
@@ -170,3 +179,14 @@ func reset() -> void:
 ## Get the last spawned instance
 func get_last_spawned() -> Node:
 	return last_spawned_instance
+
+
+## Check if there's a saved spawn position from checkpoint system
+func _check_for_saved_spawn_position() -> void:
+	# Get saved position from CheckpointManager autoload
+	var saved_position = CheckpointManager.get_spawn_position()
+
+	# Only move if we have a non-zero saved position
+	if saved_position != Vector3.ZERO:
+		spawner_node.global_position = saved_position
+		print("SpawnPoint moved to saved checkpoint position: ", saved_position)

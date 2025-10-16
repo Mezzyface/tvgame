@@ -8,6 +8,7 @@ extends Node
 # Signals
 signal movement_input(direction: Vector2)
 signal jump_requested()
+signal crouch_changed(is_crouching: bool)
 
 # Configurable action names
 @export var move_forward_action := "move_forward"
@@ -15,6 +16,7 @@ signal jump_requested()
 @export var move_left_action := "move_left"
 @export var move_right_action := "move_right"
 @export var jump_action := "jump"
+@export var crouch_action := "crouch"
 
 func _physics_process(_delta: float) -> void:
 	# Get WASD input as a 2D vector (x = left/right, y = forward/back)
@@ -35,3 +37,7 @@ func _physics_process(_delta: float) -> void:
 	# Check for jump input (one-time action)
 	if Input.is_action_just_pressed(jump_action):
 		emit_signal("jump_requested")
+
+	# Check for crouch input (held down)
+	var is_crouching = Input.is_action_pressed(crouch_action)
+	emit_signal("crouch_changed", is_crouching)

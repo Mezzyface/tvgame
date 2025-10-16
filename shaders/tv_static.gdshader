@@ -1,51 +1,72 @@
 shader_type spatial;
 
-// Static TV effect with emission and camera texture
-uniform sampler2D base_texture : filter_linear_mipmap, repeat_disable;
-uniform float static_speed : hint_range(0.0, 10.0) = 5.0;
-uniform float static_density : hint_range(0.0, 1.0) = 0.8;
-uniform vec3 emission_color : source_color = vec3(0.7, 0.8, 1.0);
+uniform sampler2D base_texture : source_color;
+uniform sampler2D hint_texture : source_color;
+uniform float hint_visibility : hint_range(0.0, 1.0) = 0.0;
+uniform float static_intensity : hint_range(0.0, 1.0) = 0.3;
 uniform float emission_strength : hint_range(0.0, 10.0) = 2.0;
+uniform vec3 emission_color : source_color = vec3(0.7, 0.8, 1.0);
 uniform float scan_line_speed : hint_range(0.0, 5.0) = 1.0;
-uniform float scan_line_intensity : hint_range(0.0, 1.0) = 0.1;
+uniform float scan_line_intensity : hint_range(0.0, 1.0) = 0.15;
 
-// Random function for noise
+// Random noise function
 float random(vec2 uv) {
     return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
+// Noise function that changes over time
+float noise(vec2 uv, float time) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+
+    float a = random(i + vec2(0.0, 0.0) + floor(time));
+    float b = random(i + vec2(1.0, 0.0) + floor(time));
+    float c = random(i + vec2(0.0, 1.0) + floor(time));
+    float d = random(i + vec2(1.0, 1.0) + floor(time));
+
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
 void fragment() {
-    vec2 uv = UV;
+    // Sample base texture
+    vec4 base_color = texture(base_texture, UV);
 
-    // Sample the base camera texture
-    vec4 base_color = texture(base_texture, uv);
+    // Sample hint texture (if provided)
+    vec4 hint_color = texture(hint_texture, UV);
 
-    // Animated static noise
-    float noise = random(uv + TIME * static_speed);
+    // Generate static noise
+    float static_noise = noise(UV * 80.0, TIME * 10.0);
+    static_noise = mix(static_noise, noise(UV * 200.0, TIME * 30.0), 0.5);
 
-    // Add vertical scan lines (higher frequency = thinner lines)
-    float scan_line = sin(uv.y * 1000.0 - TIME * scan_line_speed * 10.0) * scan_line_intensity;
+    // Add scanlines
+    float scanline = sin((UV.y + TIME * scan_line_speed) * 200.0) * 0.5 + 0.5;
+    scanline = pow(scanline, 8.0) * scan_line_intensity;
 
-    // Combine noise with scan lines
-    float static_value = noise * static_density + (1.0 - static_density) * 0.5;
-    static_value += scan_line;
+    // Combine base texture with static
+    vec3 final_color = base_color.rgb;
+    final_color = mix(final_color, vec3(static_noise), static_intensity);
 
-    // Add slight color variation for more realistic static
-    vec3 static_color = vec3(static_value);
-    static_color.r *= 1.0 + random(uv + TIME * 0.1) * 0.1;
-    static_color.b *= 1.0 + random(uv - TIME * 0.1) * 0.1;
+    // Blend in hint texture if visible
+    if (hint_visibility > 0.0) {
+        // Mix hint with current color based on visibility
+        final_color = mix(final_color, hint_color.rgb, hint_visibility * hint_color.a);
+        // Reduce static when showing hint
+        final_color = mix(final_color, vec3(static_noise), static_intensity * (1.0 - hint_visibility * 0.7));
+    }
 
-    // Mix base texture with static overlay
-    vec3 final_color = mix(base_color.rgb, static_color, static_density * .001);
+    final_color += scanline;
+
+    // Apply slight blue tint for CRT effect
+    final_color *= vec3(0.95, 0.95, 1.05);
 
     // Set albedo
     ALBEDO = final_color;
 
-    // Add emission for glow effect (mix base image emission with static)
-    vec3 emission = mix(base_color.rgb * 0.5, static_color * emission_color * emission_strength, 0.5);
-    EMISSION = emission;
+    // Make it emit light
+    EMISSION = final_color * emission_color * emission_strength;
 
-    // Make it unaffected by lighting
-    ROUGHNESS = 1.0;
+    // Slightly rough surface
+    ROUGHNESS = 0.3;
     METALLIC = 0.0;
 }

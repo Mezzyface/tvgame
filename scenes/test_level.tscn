@@ -2,13 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://c77gb1l40uk42" path="res://scenes/camera_snapshot.tscn" id="2_88ety"]
 [ext_resource type="PackedScene" uid="uid://c8yv7n2x3p4q5" path="res://scenes/spawn_point.tscn" id="3_f7g2b"]
-[ext_resource type="PackedScene" uid="uid://dyjb6ko00x8kj" path="res://scenes/pickup_tv.tscn" id="4_x4b8f"]
 [ext_resource type="Script" uid="uid://dry7cjwj0i5nd" path="res://components/MultiMeshCombinerComponent.gd" id="5_mmccc"]
 [ext_resource type="PackedScene" uid="uid://by5t7b81av3e4" path="res://assets/floor_dirt.fbx" id="6_ahbqi"]
 [ext_resource type="PackedScene" uid="uid://c1i1jgruah7wo" path="res://assets/fence.fbx" id="7_7gix3"]
 [ext_resource type="MultiMesh" uid="uid://6sdo02o1ohnw" path="res://generated_multimeshes/multimesh_fence.tres" id="8_7gix3"]
 [ext_resource type="PackedScene" uid="uid://dg504qvoc8xfc" path="res://assets/grave_B.fbx" id="8_ahbqi"]
 [ext_resource type="MultiMesh" uid="uid://cghps6p2unb4" path="res://generated_multimeshes/multimesh_floor_dirt.tres" id="9_4asn1"]
+[ext_resource type="PackedScene" uid="uid://cay08m3n5x6q7" path="res://scenes/checkpoint.tscn" id="10_4asn1"]
 
 [sub_resource type="Environment" id="Environment_black"]
 background_mode = 1
@@ -93,9 +93,6 @@ shape = SubResource("BoxShape3D_gojnm")
 
 [node name="SpawnPoint" parent="." instance=ExtResource("3_f7g2b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.424038, 0.8380475, 19.415903)
-
-[node name="PickupTV" parent="." instance=ExtResource("4_x4b8f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.27421, 0.6219778, 16.535692)
 
 [node name="Floor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, 23)
@@ -238,3 +235,6 @@ multimesh = ExtResource("8_7gix3")
 
 [node name="MultiMeshInstance3D2" type="MultiMeshInstance3D" parent="."]
 multimesh = ExtResource("9_4asn1")
+
+[node name="Checkpoint" parent="." instance=ExtResource("10_4asn1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.773556, 0.0500002, 18.83908)

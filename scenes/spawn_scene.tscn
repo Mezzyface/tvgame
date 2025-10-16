@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://mpfcrgunj81s"]
+
+[ext_resource type="PackedScene" uid="uid://dyjb6ko00x8kj" path="res://scenes/pickup_tv.tscn" id="1_2bvky"]
+[ext_resource type="PackedScene" uid="uid://cjdsfd03v6dpd" path="res://scenes/player.tscn" id="2_1m36i"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="PickupTV" parent="." instance=ExtResource("1_2bvky")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16746438, 0.08725715, -1.0546527)
+
+[node name="Player" parent="." instance=ExtResource("2_1m36i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10051978, 0.08431029, 1.1394979)
