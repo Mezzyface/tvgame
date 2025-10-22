@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cc5o7ai4s65c5"
+path="res://.godot/imported/candy_green_C.obj-7723e16aadfdabe1bafb3794735b368f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/candy_green_C.obj-7723e16aadfdabe1bafb3794735b368f.mesh"]
+
+source_file="res://assets/Kaykit/obj/candy_green_C.obj"
+dest_files=["res://.godot/imported/candy_green_C.obj-7723e16aadfdabe1bafb3794735b368f.mesh", "res://.godot/imported/candy_green_C.obj-7723e16aadfdabe1bafb3794735b368f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

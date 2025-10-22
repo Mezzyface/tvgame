@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://2v2ckaefscqa"]
+
+[ext_resource type="Script" uid="uid://cqpx1x3hwdww2" path="res://components/SwitchComponent.gd" id="1_switch"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_candycorn"]
+top_radius = 0.2
+bottom_radius = 0.3
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_candycorn"]
+albedo_color = Color(1, 0.65, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_collision"]
+radius = 0.3
+height = 0.6
+
+[node name="CandyCornSwitch" type="StaticBody3D"]
+
+[node name="SwitchComponent" type="Node" parent="."]
+script = ExtResource("1_switch")
+switch_type = 1
+active_rotation = Vector3(-90, 0, 0)
+animation_speed = 3.0
+
+[node name="CandyCornModel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_candycorn")
+surface_material_override/0 = SubResource("StandardMaterial3D_candycorn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("CylinderShape3D_collision")

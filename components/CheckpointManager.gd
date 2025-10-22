@@ -191,3 +191,23 @@ func clear_save() -> void:
 		DirAccess.remove_absolute(SAVE_FILE_PATH)
 
 	print("Save data cleared")
+
+
+## Respawn player at last checkpoint (reload current level)
+func respawn_at_checkpoint() -> void:
+	print("Player died! Respawning at last checkpoint...")
+
+	# If we have a saved checkpoint, reload the level
+	if game_state and game_state.furthest_checkpoint != CheckpointID.ID.NONE:
+		var current_level = game_state.current_level_path
+		if current_level.is_empty():
+			current_level = get_tree().current_scene.scene_file_path
+
+		print("  Reloading level: ", current_level)
+		print("  Checkpoint: ", CheckpointID.get_checkpoint_name(game_state.furthest_checkpoint))
+
+		# Reload the current level (preserves checkpoint progress)
+		get_tree().change_scene_to_file(current_level)
+	else:
+		push_warning("No checkpoint to respawn at! Starting new game.")
+		new_game("res://scenes/levels/Level_1.tscn")

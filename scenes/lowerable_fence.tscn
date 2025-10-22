@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://tattr3lbeuy7"]
+
+[ext_resource type="Script" uid="uid://dl6i1yypexgfw" path="res://components/LowerableGateComponent.gd" id="1_gate"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fence"]
+size = Vector3(5, 2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fence"]
+albedo_color = Color(0.4, 0.3, 0.2, 1)
+
+[node name="LowerableFence" type="StaticBody3D"]
+
+[node name="LowerableGateComponent" type="Node" parent="."]
+script = ExtResource("1_gate")
+lower_distance = 2.5
+animation_speed = 1.5
+
+[node name="FenceMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_fence")
+surface_material_override/0 = SubResource("StandardMaterial3D_fence")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxMesh_fence")

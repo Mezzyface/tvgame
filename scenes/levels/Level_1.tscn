@@ -1,0 +1,128 @@
+[gd_scene load_steps=14 format=3 uid="uid://dbujte1ua5p0n"]
+
+[ext_resource type="MeshLibrary" uid="uid://c3p8j2wedo5j" path="res://MeshLibrary.tres" id="1_n0r7v"]
+[ext_resource type="PackedScene" uid="uid://c77gb1l40uk42" path="res://scenes/camera_snapshot.tscn" id="3_1tdkx"]
+[ext_resource type="PackedScene" uid="uid://degvgvonvqfna" path="res://scenes/death.tscn" id="4_cnmxh"]
+[ext_resource type="Script" uid="uid://bjth7p042i65b" path="res://components/CheckpointComponent.gd" id="5_u8eek"]
+[ext_resource type="Script" uid="uid://cch5knwnxww4a" path="res://components/SpawnerComponent.gd" id="6_t1jjp"]
+
+[sub_resource type="Environment" id="Environment_5x2jh"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+tonemap_mode = 2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_checkpoint"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_checkpoint"]
+albedo_color = Color(0.2, 0.8, 0.3, 1)
+emission_enabled = true
+emission = Color(0.2, 0.8, 0.3, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape_checkpoint"]
+radius = 1.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5x2jh"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8eek"]
+albedo_color = Color(0.2, 0.8, 0.3, 1)
+emission_enabled = true
+emission = Color(0.2, 0.8, 0.3, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t1jjp"]
+radius = 1.2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_5x2jh"]
+vertices = PackedVector3Array(-6.531747, 1.4683099, 14.718254, 0.46825314, 1.4683099, 14.718254, 0.71825314, 1.4683099, 12.468254, -6.781747, 1.4683099, 12.468254, 4.468253, 1.4683099, -2.5317464, -10.531747, 1.4683099, -2.5317464, 4.468253, 1.4683099, 12.468254, -10.531747, 1.4683099, 12.468254, -4.531747, 1.4683099, 20.718254, -1.5317469, 1.4683099, 20.718254, 0.46825314, 1.4683099, 20.468254, -6.531747, 1.4683099, 20.468254, -4.531747, 1.4683099, 31.218254, -1.5317469, 1.4683099, 31.218254, -1.2817469, 1.4683099, 33.468254, -4.781747, 1.4683099, 33.468254, -8.531747, 1.4683099, 44.468254, 2.4682531, 1.4683099, 44.468254, -8.531747, 1.4683099, 33.468254, 2.4682531, 1.4683099, 33.468254)
+polygons = [PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 2), PackedInt32Array(3, 5, 2), PackedInt32Array(2, 5, 4), PackedInt32Array(4, 6, 2), PackedInt32Array(3, 7, 5), PackedInt32Array(8, 11, 9), PackedInt32Array(9, 11, 10), PackedInt32Array(10, 11, 0), PackedInt32Array(10, 0, 1), PackedInt32Array(8, 9, 12), PackedInt32Array(12, 9, 13), PackedInt32Array(13, 14, 12), PackedInt32Array(12, 14, 15), PackedInt32Array(14, 17, 15), PackedInt32Array(15, 17, 16), PackedInt32Array(16, 18, 15), PackedInt32Array(14, 19, 17)]
+geometry_parsed_geometry_type = 1
+geometry_source_geometry_mode = 1
+agent_height = 2.0
+agent_max_climb = 0.5
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5x2jh")
+
+[node name="GridMap" type="GridMap" parent="." groups=["navigation_mesh_source_group"]]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+mesh_library = ExtResource("1_n0r7v")
+data = {
+"cells": PackedInt32Array(65535, 0, 1048626, 65535, 65534, 1048626, 1, 65534, 1048626, 1, 0, 1048626, 3, 0, 1048626, 3, 65534, 1048626, 5, 0, 1048626, 5, 65534, 1048626, 5, 2, 1048626, 3, 2, 1048626, 1, 2, 1048626, 65535, 2, 1048626, 65535, 4, 1048626, 1, 4, 1048626, 3, 4, 1048626, 5, 4, 1048626, 7, 2, 1048626, 7, 0, 1048626, 9, 2, 1048626, 9, 0, 1048626, 11, 1, 1048626, 13, 1, 1048626, 15, 1, 1048626, 17, 3, 1048626, 17, 1, 1048626, 17, 65535, 1048626, 19, 65535, 1048626, 19, 1, 1048626, 19, 3, 1048626, 21, 3, 1048626, 21, 1, 1048626, 21, 65535, 1048626)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GridMap2" type="GridMap" parent="."]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+mesh_library = ExtResource("1_n0r7v")
+data = {
+"cells": PackedInt32Array(21, 1, 1441845, 17, 65534, 655486, 19, 65534, 126, 21, 65534, 126, 21, 4, 126, 19, 4, 126, 17, 4, 126, 22, 65535, 1441918, 22, 1, 1441918, 22, 3, 1441918, 16, 65535, 1048702, 16, 3, 1048702, 15, 0, 126, 15, 2, 126, 13, 0, 126, 13, 2, 126, 11, 0, 126, 11, 2, 126, 7, 65535, 126, 9, 65535, 126, 9, 3, 126, 7, 3, 126, 5, 65533, 126, 3, 65533, 126, 1, 65533, 126, 65535, 65533, 126, 65535, 5, 126, 1, 5, 126, 3, 5, 126, 5, 5, 126, 65534, 65534, 1441918, 65534, 0, 1441918, 65534, 1, 1441918, 65534, 3, 1441918, 65534, 4, 1441918, 6, 65534, 1441918, 6, 4, 1441918, 10, 65535, 1441918, 10, 3, 1441918)
+}
+
+[node name="CameraSnapshot" parent="." instance=ExtResource("3_1tdkx")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5.288436, 7.930064, 29.568207)
+
+[node name="Death" parent="." instance=ExtResource("4_cnmxh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9596643, 1.0396261, -2.5056076)
+
+[node name="Checkpoint" type="Node3D" parent="."]
+transform = Transform3D(2.2361197, 0, 0, 0, 1, 0, 0, 0, 2.1188679, -2.9420376, 1.0396261, 41.564358)
+
+[node name="CheckpointComponent" type="Node" parent="Checkpoint"]
+script = ExtResource("5_u8eek")
+checkpoint_id = 3
+one_time_only = false
+next_level_path = "res://scenes/levels/Level_2.tscn"
+visual_mesh_path = NodePath("../VisualMarker")
+
+[node name="SpawnerComponent" type="Node" parent="Checkpoint"]
+script = ExtResource("6_t1jjp")
+scene_to_spawn = "uid://mpfcrgunj81s"
+
+[node name="VisualMarker" type="MeshInstance3D" parent="Checkpoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_checkpoint")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_checkpoint")
+
+[node name="TriggerArea" type="Area3D" parent="Checkpoint"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint/TriggerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape_checkpoint")
+
+[node name="Checkpoint2" type="Node3D" parent="."]
+transform = Transform3D(1.9260973, 0, 0, 0, 1, 0, 0, 0, 1.9260973, -2.563006, 1.0396271, 5.248984)
+
+[node name="CheckpointComponent" type="Node" parent="Checkpoint2"]
+script = ExtResource("5_u8eek")
+checkpoint_id = 0
+visual_mesh_path = NodePath("../VisualMarker")
+
+[node name="SpawnerComponent" type="Node" parent="Checkpoint2"]
+script = ExtResource("6_t1jjp")
+scene_to_spawn = "uid://mpfcrgunj81s"
+spawn_on_ready = true
+
+[node name="VisualMarker" type="MeshInstance3D" parent="Checkpoint2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_5x2jh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_u8eek")
+
+[node name="TriggerArea" type="Area3D" parent="Checkpoint2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2/TriggerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_t1jjp")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_5x2jh")

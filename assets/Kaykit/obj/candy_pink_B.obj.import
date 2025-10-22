@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://vf258uekihnp"
+path="res://.godot/imported/candy_pink_B.obj-93a88991ce8ea24b4bb07a31071383cd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/candy_pink_B.obj-93a88991ce8ea24b4bb07a31071383cd.mesh"]
+
+source_file="res://assets/Kaykit/obj/candy_pink_B.obj"
+dest_files=["res://.godot/imported/candy_pink_B.obj-93a88991ce8ea24b4bb07a31071383cd.mesh", "res://.godot/imported/candy_pink_B.obj-93a88991ce8ea24b4bb07a31071383cd.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4mv6bxvrtj4u"]
+
+[ext_resource type="PackedScene" uid="uid://kl7vfdnq7v82" path="res://assets/Kaykit/gltf/bone_C.gltf" id="1_tipx0"]
+[ext_resource type="PackedScene" uid="uid://dlblkir5uhfjp" path="res://assets/Kaykit/gltf/fence_pillar.gltf" id="2_s7ymk"]
+[ext_resource type="Script" uid="uid://bpymrlckmpuny" path="res://components/SwitchComponent.gd" id="3_switch"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_interaction"]
+size = Vector3(0.5, 2, 0.5)
+
+[node name="Switch" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_interaction")
+
+[node name="SwitchComponent" type="Node" parent="."]
+script = ExtResource("3_switch")
+animated_object_path = NodePath("../bone_C2")
+max_rotation_angle = 90.0
+min_activation_angle = 45.0
+
+[node name="fence_pillar2" parent="." instance=ExtResource("2_s7ymk")]
+
+[node name="bone_C2" parent="." instance=ExtResource("1_tipx0")]
+transform = Transform3D(-4.371139e-08, 0, 1, -0.70710677, 0.70710677, -3.090862e-08, -0.70710677, -0.70710677, -3.090862e-08, 0, 1.397, 0.321)

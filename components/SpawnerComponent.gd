@@ -46,7 +46,8 @@ func _ready() -> void:
 
 	# Auto-spawn if configured (deferred to avoid parent busy error)
 	if spawn_on_ready:
-		spawn.call_deferred()
+		# Wait for physics to be ready before spawning
+		_spawn_when_ready.call_deferred()
 
 ## Spawn the configured scene
 ## Returns the spawned instance or null if spawn failed
@@ -98,7 +99,14 @@ func spawn() -> Node:
 	if use_spawner_transform and spawner_node and instance is Node3D:
 		# Apply spawner's transform plus offsets
 		instance.global_position = spawner_node.global_position + spawn_offset
-		instance.global_rotation_degrees = spawner_node.global_rotation_degrees + spawn_rotation_offset
+
+		# For CharacterBody3D (like player), only apply Y rotation to avoid messing up controls
+		# Other axes (pitch/roll) would interfere with camera/movement systems
+		if instance is CharacterBody3D:
+			var yaw_only = Vector3(0, spawner_node.global_rotation_degrees.y, 0)
+			instance.global_rotation_degrees = yaw_only + spawn_rotation_offset
+		else:
+			instance.global_rotation_degrees = spawner_node.global_rotation_degrees + spawn_rotation_offset
 
 	# Update state
 	has_spawned = true
@@ -181,12 +189,41 @@ func get_last_spawned() -> Node:
 	return last_spawned_instance
 
 
+## Wait for physics to be ready before spawning (used by spawn_on_ready)
+func _spawn_when_ready() -> void:
+	# Wait one physics frame to ensure collision is ready
+	await get_tree().physics_frame
+
+	# Clean up any duplicate players from previous scene (shouldn't happen, but just in case)
+	if scene_to_spawn.contains("spawn_scene"):
+		await _cleanup_duplicate_players()
+
+	spawn()
+
+## Remove any old players that might still exist from scene transition
+func _cleanup_duplicate_players() -> void:
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		print("Warning: Found ", players.size(), " existing player(s) before spawning. Removing them...")
+		for player in players:
+			player.queue_free()
+		# Wait a frame for them to be removed
+		await get_tree().process_frame
+
 ## Check if there's a saved spawn position from checkpoint system
 func _check_for_saved_spawn_position() -> void:
-	# Get saved position from CheckpointManager autoload
-	var saved_position = CheckpointManager.get_spawn_position()
+	# Only use saved position if we're on the same level that was saved
+	var current_level = get_tree().current_scene.scene_file_path
+	var saved_level = CheckpointManager.game_state.current_level_path if CheckpointManager.game_state else ""
 
-	# Only move if we have a non-zero saved position
-	if saved_position != Vector3.ZERO:
-		spawner_node.global_position = saved_position
-		print("SpawnPoint moved to saved checkpoint position: ", saved_position)
+	# Only move spawn point if we're on the same level that was saved
+	if current_level == saved_level and not saved_level.is_empty():
+		var saved_position = CheckpointManager.get_spawn_position()
+
+		# Only move if we have a non-zero saved position
+		if saved_position != Vector3.ZERO:
+			spawner_node.global_position = saved_position
+			print("SpawnPoint moved to saved checkpoint position: ", saved_position)
+	else:
+		# Different level or no saved level - use default spawn point position
+		print("SpawnPoint using default position (new level or no save)")

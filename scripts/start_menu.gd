@@ -19,7 +19,7 @@ func _ready():
 
 func _on_start_button_pressed():
 	# Start a new game
-	CheckpointManager.new_game("res://scenes/test_level.tscn")
+	CheckpointManager.new_game("res://scenes/levels/Level_1.tscn")
 
 func _on_continue_button_pressed():
 	# Load from last checkpoint

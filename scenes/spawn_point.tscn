@@ -9,7 +9,7 @@ size = Vector3(0.3, 0.3, 0.3)
 
 [node name="SpawnerComponent" type="Node" parent="."]
 script = ExtResource("1_spawn")
-scene_to_spawn = "uid://mpfcrgunj81s"
+scene_to_spawn = "uid://cjdsfd03v6dpd"
 spawn_on_ready = true
 editor_only_visual = true
 

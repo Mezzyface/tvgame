@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cjdsfd03v6dpd"]
+[gd_scene load_steps=11 format=3 uid="uid://cjdsfd03v6dpd"]
 
 [ext_resource type="Script" uid="uid://b3upw0ayd0lyl" path="res://components/MovementInputComponent.gd" id="1_2xk3v"]
 [ext_resource type="Script" uid="uid://c75c6usvukbav" path="res://components/Walk3DComponent.gd" id="2_g4h8j"]
@@ -7,12 +7,13 @@
 [ext_resource type="Script" uid="uid://c0nfwge1oc6oi" path="res://components/CameraControllerComponent.gd" id="5_camera"]
 [ext_resource type="Script" uid="uid://rx7qjhxpfpc3" path="res://components/PickupControllerComponent.gd" id="6_pickup"]
 [ext_resource type="Script" uid="uid://ctipkqt3r6cot" path="res://components/Crouch3DComponent.gd" id="7_crouch"]
+[ext_resource type="Script" uid="uid://cmq3aq7mqcpjp" path="res://components/MouseInteractionComponent.gd" id="8_interaction"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_i3pqv"]
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -47,6 +48,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 [node name="PickupControllerComponent" type="Node" parent="."]
 script = ExtResource("6_pickup")
 pickup_range = 8.0
+
+[node name="MouseInteractionComponent" type="Node" parent="."]
+script = ExtResource("8_interaction")
+interaction_range = 10.0
 
 [connection signal="jump_requested" from="MovementInputComponent" to="Jump3DComponent" method="perform_jump"]
 [connection signal="movement_input" from="MovementInputComponent" to="Walk3DComponent" method="apply_movement"]

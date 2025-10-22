@@ -6,7 +6,7 @@
 [node name="Node3D" type="Node3D"]
 
 [node name="PickupTV" parent="." instance=ExtResource("1_2bvky")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16746438, 0.08725715, -1.0546527)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.0619035)
 
 [node name="Player" parent="." instance=ExtResource("2_1m36i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10051978, 0.08431029, 1.1394979)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.5885592)

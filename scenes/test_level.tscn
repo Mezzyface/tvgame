@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://c77gb1l40uk42" path="res://scenes/camera_snapshot.tscn" id="2_88ety"]
 [ext_resource type="PackedScene" uid="uid://c8yv7n2x3p4q5" path="res://scenes/spawn_point.tscn" id="3_f7g2b"]
 [ext_resource type="Script" uid="uid://dry7cjwj0i5nd" path="res://components/MultiMeshCombinerComponent.gd" id="5_mmccc"]
-[ext_resource type="PackedScene" uid="uid://by5t7b81av3e4" path="res://assets/floor_dirt.fbx" id="6_ahbqi"]
-[ext_resource type="PackedScene" uid="uid://c1i1jgruah7wo" path="res://assets/fence.fbx" id="7_7gix3"]
+[ext_resource type="PackedScene" uid="uid://by5t7b81av3e4" path="res://assets/used_assets/floor_dirt.fbx" id="6_ahbqi"]
+[ext_resource type="PackedScene" uid="uid://c1i1jgruah7wo" path="res://assets/used_assets/fence.fbx" id="7_7gix3"]
 [ext_resource type="MultiMesh" uid="uid://6sdo02o1ohnw" path="res://generated_multimeshes/multimesh_fence.tres" id="8_7gix3"]
-[ext_resource type="PackedScene" uid="uid://dg504qvoc8xfc" path="res://assets/grave_B.fbx" id="8_ahbqi"]
+[ext_resource type="PackedScene" uid="uid://dg504qvoc8xfc" path="res://assets/halloween/grave_B.fbx" id="8_ahbqi"]
 [ext_resource type="MultiMesh" uid="uid://cghps6p2unb4" path="res://generated_multimeshes/multimesh_floor_dirt.tres" id="9_4asn1"]
 [ext_resource type="PackedScene" uid="uid://cay08m3n5x6q7" path="res://scenes/checkpoint.tscn" id="10_4asn1"]
 
